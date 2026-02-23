@@ -1,0 +1,26 @@
+# Dependencies
+/packages/php/vendor/
+/packages/vue/node_modules/
+/packages/react/node_modules/
+
+# Build output
+/packages/vue/dist/
+/packages/react/dist/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+.phpunit.result.cache
+.phpunit.cache/
+coverage/
+
+# Misc
+*.log
