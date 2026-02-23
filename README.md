@@ -211,9 +211,9 @@ Remove the `'toast' => session('toast')` from your `HandleInertiaRequests` middl
 
 | Package | Description |
 |---------|-------------|
-| [`inertia-toast/inertia-toast`](packages/php) | PHP package — Facade, helper, middleware |
-| [`@laravel-inertia-toast/vue`](packages/vue) | Vue 3 adapter — Plugin, composable, components |
-| [`@laravel-inertia-toast/react`](packages/react) | React adapter — Provider, hook, components |
+| `inertia-toast/inertia-toast` | PHP package — Facade, helper, middleware |
+| [`@laravel-inertia-toast/vue`](vue) | Vue 3 adapter — Plugin, composable, components |
+| [`@laravel-inertia-toast/react`](react) | React adapter — Provider, hook, components |
 
 ## Requirements
 
