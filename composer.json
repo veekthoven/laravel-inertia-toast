@@ -1,11 +1,11 @@
 {
-    "name": "inertia-toast/inertia-toast",
-    "description": "Beautiful toast notifications for Laravel + Inertia.js applications.",
+    "name": "veekthoven/laravel-inertia-toast",
+    "description": "Beautiful toast notifications for Laravel + Inertia.js applications. Fluent PHP API, multi-toast support, redirect-safe, with Vue 3 and React adapters.",
     "keywords": ["laravel", "inertia", "toast", "notifications"],
     "license": "MIT",
     "authors": [
         {
-            "name": "Victor Nwanguma"
+            "name": "Victor Abbah Nkoms"
         }
     ],
     "require": {
