@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useEffect, useReducer, useRef } from 'react'
-import { router, usePage } from '@inertiajs/react'
+import { router } from '@inertiajs/react'
 import type { ToastConfig, ToastItem, ToastLevel, ToastMessage } from './types'
 
 let counter = 0
@@ -71,13 +71,12 @@ export function ToastProvider({ children, config: configOverrides }: ToastProvid
     config: mergedConfig,
   })
 
-  const page = usePage()
   const configRef = useRef(mergedConfig)
   configRef.current = mergedConfig
 
   useEffect(() => {
-    const removeListener = router.on('finish', () => {
-      const toasts = (page.props as Record<string, unknown>)[
+    const removeListener = router.on('navigate', (event) => {
+      const toasts = (event.detail.page.props as Record<string, unknown>)[
         configRef.current.propKey
       ] as ToastMessage[] | null | undefined
 
@@ -89,7 +88,7 @@ export function ToastProvider({ children, config: configOverrides }: ToastProvid
     })
 
     return removeListener
-  }, [page.props])
+  }, [])
 
   const add = useCallback((message: string, level: ToastLevel, duration?: number) => {
     dispatch({
