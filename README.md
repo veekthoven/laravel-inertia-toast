@@ -1,6 +1,6 @@
 # Laravel Inertia Toast
 
-Beautiful toast notifications for Laravel + Inertia.js applications. Supports Vue 3 and React.
+Beautiful toast notifications for Laravel + Inertia.js applications. Fluent PHP API, multi-toast support, redirect-safe, with Vue 3 and React adapters.
 
 ## Features
 
