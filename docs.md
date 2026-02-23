@@ -5,7 +5,7 @@
 ### Server (PHP)
 
 ```bash
-composer require inertia-toast/inertia-toast
+composer require veekthoven/laravel-inertia-toast
 ```
 
 The package auto-registers its service provider and middleware. No manual setup needed.

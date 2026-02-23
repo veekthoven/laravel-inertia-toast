@@ -19,7 +19,7 @@ Beautiful toast notifications for Laravel + Inertia.js applications. Supports Vu
 ### 1. PHP Package
 
 ```bash
-composer require inertia-toast/inertia-toast
+composer require veekthoven/laravel-inertia-toast
 ```
 
 Optionally publish the config:
@@ -211,7 +211,7 @@ Remove the `'toast' => session('toast')` from your `HandleInertiaRequests` middl
 
 | Package | Description |
 |---------|-------------|
-| `inertia-toast/inertia-toast` | PHP package — Facade, helper, middleware |
+| `veekthoven/laravel-inertia-toast` | PHP package — Facade, helper, middleware |
 | [`@laravel-inertia-toast/vue`](vue) | Vue 3 adapter — Plugin, composable, components |
 | [`@laravel-inertia-toast/react`](react) | React adapter — Provider, hook, components |
 
