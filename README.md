@@ -5,12 +5,16 @@ An opinionated package that provides beautiful toast notifications for Laravel +
 Toast notifications can can be triggered from both your backend (PHP) and frontend (JavaScript). Use `Toast::success('Saved!')` in your controllers or `useToast().success('Copied!')` in your components — same beautiful toasts either way.
 
 ## Demo
+**PHP:**
 ![PHP](demo/php.png)
 
+**React:**
 ![React](demo/react.png)
 
+**Vue:**
 ![Vue](demo/vue.png)
 
+**See it in action:**
 ![Vue](demo/toast-demo.gif)
 
 ## Features
