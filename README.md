@@ -1,17 +1,26 @@
 # Laravel Inertia Toast
 
-Beautiful toast notifications for Laravel + Inertia.js applications. Fluent PHP API, multi-toast support, redirect-safe, with Vue 3 and React adapters.
+An opinionated package that provides beautiful toast notifications for Laravel + Inertia.js applications. Fluent PHP API, multi-toast support, redirect-safe, with Vue 3 and React adapters.
+
+Toast notifications can can be triggered from both your backend (PHP) and frontend (JavaScript). Use `Toast::success('Saved!')` in your controllers or `useToast().success('Copied!')` in your components — same beautiful toasts either way.
+
+## Demo
+![PHP](demo/php.png)
+
+![React](demo/react.png)
+
+![Vue](demo/vue.png)
+
+![Vue](demo/toast-demo.gif)
 
 ## Features
 
 - Fluent PHP API: `toast('Saved!')->success()` or `Toast::success('Saved!')`
-- Multi-toast support — queue multiple toasts per request
-- Redirect-safe — toasts survive redirect chains
-- Zero config — no middleware or `HandleInertiaRequests` changes needed
 - Vue 3 and React adapters with TypeScript support
 - Position-aware with 6 positions (top-right, top-left, top-center, bottom-right, bottom-left, bottom-center)
 - Tailwind CSS styling (v3 & v4 compatible)
 - Client-side toast API via `useToast()` composable/hook
+- Beautiful in/out animations.
 
 ## Installation
 
@@ -41,31 +50,6 @@ npm install @laravel-inertia-toast/vue
 npm install @laravel-inertia-toast/react
 ```
 
-### 3. Tailwind CSS
-
-Since the toast components use Tailwind classes internally, you need to add the package to Tailwind's source detection so the required classes are generated.
-
-Add the following `@source` directive to your main CSS file (e.g. `resources/css/app.css`):
-
-**Vue 3:**
-
-```css
-@source "../../node_modules/@laravel-inertia-toast/vue/dist/**/*.js";
-```
-<!-- Tailwind v3 -->
-
-<!-- ```js
-@source "../../node_modules/@laravel-inertia-toast/vue/src/**/*.vue";
-``` -->
-
-**React:**
-
-```css
-@source "../../node_modules/@laravel-inertia-toast/react/dist/**/*.js";
-```
-
-> The relative path assumes your CSS file is at `resources/css/app.css`. Adjust accordingly if your setup differs.
-
 ## Setup
 
 ### Vue 3
@@ -73,15 +57,16 @@ Add the following `@source` directive to your main CSS file (e.g. `resources/css
 Register the plugin in your `app.js`:
 
 ```js
+// In your resources/js/app.js
+
 import { createApp } from 'vue'
 import { InertiaToast } from '@laravel-inertia-toast/vue'
 
 const app = createApp(App)
 app.use(InertiaToast, {
-  // Optional config overrides
-  // duration: 5000,
-  // position: 'top-right',
-  // maxVisible: 5,
+    duration: 5000,
+    position: 'top-right',
+    maxVisible: 5,
 })
 app.mount('#app')
 ```
@@ -106,17 +91,84 @@ import { Toasts } from '@laravel-inertia-toast/vue'
 Wrap your app with `<ToastProvider>` and add `<Toasts />`:
 
 ```jsx
+// in your resources/js/app.tsx
+
+import { createRoot } from 'react-dom/client';
 import { ToastProvider, Toasts } from '@laravel-inertia-toast/react'
 
-function Layout({ children }) {
-  return (
-    <ToastProvider config={{ position: 'top-right' }}>
-      {children}
-      <Toasts />
-    </ToastProvider>
-  )
+setup({ el, App, props }) {
+    const root = createRoot(el);
+
+    root.render(
+        <ToastProvider
+            config={{
+                position: 'top-right'
+                duration: 5000,
+                maxVisible: 5,
+            }}
+        >
+            <App {...props} />
+            <Toasts />
+        </ToastProvider>
+    );
+},
+```
+
+### Tailwind CSS
+
+Since the toast components use Tailwind classes internally, you need to add the package to Tailwind's source detection so the required classes are generated.
+
+If you use Tailwind v4, add the following `@source` directive to your main CSS file (e.g. `resources/css/app.css`):
+
+**Vue 3:**
+
+```css
+@source "../../node_modules/@laravel-inertia-toast/vue/dist/**/*.js"; 
+```
+
+
+**React:**
+
+```css
+@source "../../node_modules/@laravel-inertia-toast/react/dist/**/*.js";
+```
+
+> The relative path above assumes your CSS file is at `resources/css/app.css`. Adjust accordingly if your setup differs.
+
+Or if you are still on Tailwind v3, add the following to your `tailwind.config.js` file.
+
+
+**Vue 3:**
+```js
+// tailwind.config.js
+
+module.exports = {                                                                                   
+    content: [
+        //...
+
+        './node_modules/@laravel-inertia-toast/vue/dist/**/*.js',
+
+        //...
+    ],
 }
 ```
+
+**React:**
+```js
+// tailwind.config.js
+
+module.exports = {                                                                                   
+    content: [
+        //...
+
+        './node_modules/@laravel-inertia-toast/react/dist/**/*.js',
+        
+        //...
+    ],
+}
+```
+
+> The relative paths above assume your `tailwind.config.js` is at the root of your project. Adjust accordingly if your setup differs.
 
 ## Server-Side Usage
 
@@ -218,12 +270,15 @@ Frontend config can be passed when registering the plugin (Vue) or via the `conf
 | [`@laravel-inertia-toast/vue`](vue) | Vue 3 adapter — Plugin, composable, components |
 | [`@laravel-inertia-toast/react`](react) | React adapter — Provider, hook, components |
 
+> **Note:** You can install and use the frontend adapters without the backend package. But to use the backend package, you'd need to install and setup the adapter of the frontend framework you are using. To get the full experience though, use both backend and frontend packages.
+
 ## Requirements
 
 - PHP 8.1+
 - Laravel 10, 11, or 12
 - Inertia.js v2.3.3+
 - Vue 3.3+ or React 18+
+- Tailwind v3, v4
 
 ## License
 
