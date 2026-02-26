@@ -1,5 +1,5 @@
 import type { Plugin } from 'vue'
-import { router, usePage } from '@inertiajs/vue3'
+import { router } from '@inertiajs/vue3'
 import type { ToastConfig, ToastMessage } from './types'
 import { store } from './store'
 
@@ -15,9 +15,10 @@ export const InertiaToast: Plugin = {
       return
     }
 
-    router.on('finish', () => {
-      const page = usePage()
-      const toasts = page.props[store.config.propKey] as ToastMessage[] | null | undefined
+    router.on('flash', (event) => {
+      const toasts = (event.detail.flash as Record<string, unknown>)[
+        store.config.propKey
+      ] as ToastMessage[] | null | undefined
 
       if (toasts && Array.isArray(toasts)) {
         toasts.forEach((toast) => {

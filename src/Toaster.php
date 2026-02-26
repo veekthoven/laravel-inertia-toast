@@ -2,7 +2,7 @@
 
 namespace InertiaToast;
 
-use Illuminate\Support\Facades\Session;
+use Inertia\Inertia;
 use InertiaToast\Enums\ToastLevel;
 
 class Toaster
@@ -34,43 +34,12 @@ class Toaster
     {
         $this->pending[] = new ToastMessage($message, $level, $duration);
 
-        return $this;
-    }
-
-    /**
-     * Flash all pending toasts to the session, merging with any existing.
-     */
-    public function flash(): void
-    {
-        if (empty($this->pending)) {
-            return;
-        }
-
-        $existing = Session::get($this->getSessionKey(), []);
-
-        $toasts = array_merge(
-            $existing,
+        Inertia::flash(
+            $this->getPropKey(),
             array_map(fn (ToastMessage $t) => $t->toArray(), $this->pending),
         );
 
-        Session::flash($this->getSessionKey(), $toasts);
-
-        $this->pending = [];
-    }
-
-    /**
-     * Read toasts from the session (used by middleware to share with Inertia).
-     *
-     * @return array<int, array{message: string, level: string, duration: int|null}>
-     */
-    public function read(): array
-    {
-        return Session::get($this->getSessionKey(), []);
-    }
-
-    public function getSessionKey(): string
-    {
-        return config('inertia-toast.session_key', '_toasts');
+        return $this;
     }
 
     public function getPropKey(): string

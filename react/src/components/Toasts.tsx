@@ -17,11 +17,11 @@ export function Toasts() {
 
   return (
     <div
-      className={`pointer-events-none fixed z-50 flex w-full max-w-sm flex-col gap-3 ${positionClasses}`}
+      className={`fixed z-50 flex w-full max-w-sm flex-col gap-3 ${positionClasses}`}
       aria-live="polite"
     >
       {items.map((item) => (
-        <ToastItem key={item.id} toast={item} config={config} onRemove={remove} />
+        <ToastItem key={item.id} toast={item} config={config} position={config.position} onRemove={remove} />
       ))}
     </div>
   )

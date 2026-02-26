@@ -75,8 +75,8 @@ export function ToastProvider({ children, config: configOverrides }: ToastProvid
   configRef.current = mergedConfig
 
   useEffect(() => {
-    const removeListener = router.on('navigate', (event) => {
-      const toasts = (event.detail.page.props as Record<string, unknown>)[
+    const removeListener = router.on('flash', (event) => {
+      const toasts = (event.detail.flash as Record<string, unknown>)[
         configRef.current.propKey
       ] as ToastMessage[] | null | undefined
 

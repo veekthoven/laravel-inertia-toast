@@ -7,10 +7,9 @@ Beautiful toast notifications for Laravel + Inertia.js applications. Fluent PHP 
 - Fluent PHP API: `toast('Saved!')->success()` or `Toast::success('Saved!')`
 - Multi-toast support — queue multiple toasts per request
 - Redirect-safe — toasts survive redirect chains
-- Auto-registered middleware — zero config, no need to edit `HandleInertiaRequests`
+- Zero config — no middleware or `HandleInertiaRequests` changes needed
 - Vue 3 and React adapters with TypeScript support
 - Position-aware with 6 positions (top-right, top-left, top-center, bottom-right, bottom-left, bottom-center)
-- Dark mode support
 - Tailwind CSS styling (v3 & v4 compatible)
 - Client-side toast API via `useToast()` composable/hook
 
@@ -41,6 +40,31 @@ npm install @laravel-inertia-toast/vue
 ```bash
 npm install @laravel-inertia-toast/react
 ```
+
+### 3. Tailwind CSS
+
+Since the toast components use Tailwind classes internally, you need to add the package to Tailwind's source detection so the required classes are generated.
+
+Add the following `@source` directive to your main CSS file (e.g. `resources/css/app.css`):
+
+**Vue 3:**
+
+```css
+@source "../../node_modules/@laravel-inertia-toast/vue/dist/**/*.js";
+```
+<!-- Tailwind v3 -->
+
+<!-- ```js
+@source "../../node_modules/@laravel-inertia-toast/vue/src/**/*.vue";
+``` -->
+
+**React:**
+
+```css
+@source "../../node_modules/@laravel-inertia-toast/react/dist/**/*.js";
+```
+
+> The relative path assumes your CSS file is at `resources/css/app.css`. Adjust accordingly if your setup differs.
 
 ## Setup
 
@@ -180,38 +204,17 @@ return [
     'duration' => 5000,         // Default auto-dismiss duration (ms)
     'position' => 'top-right',  // Toast position on screen
     'max_visible' => 5,         // Max simultaneous toasts
-    'prop_key' => 'toasts',     // Inertia page prop key
-    'session_key' => '_toasts', // Session flash key
+    'prop_key' => 'toasts',     // Inertia flash key
 ];
 ```
 
 Frontend config can be passed when registering the plugin (Vue) or via the `config` prop on `<ToastProvider>` (React).
 
-## Migration from Raw Session Flash
-
-If you're currently using `->with('toast', [...])`:
-
-**Before:**
-```php
-return back()->with('toast', [
-    'message' => 'Profile updated!',
-    'level' => 'success',
-]);
-```
-
-**After:**
-```php
-toast('Profile updated!')->success();
-return back();
-```
-
-Remove the `'toast' => session('toast')` from your `HandleInertiaRequests` middleware — the package handles this automatically.
-
 ## Packages
 
 | Package | Description |
 |---------|-------------|
-| `veekthoven/laravel-inertia-toast` | PHP package — Facade, helper, middleware |
+| `veekthoven/laravel-inertia-toast` | PHP package — Facade, helper, Inertia flash integration |
 | [`@laravel-inertia-toast/vue`](vue) | Vue 3 adapter — Plugin, composable, components |
 | [`@laravel-inertia-toast/react`](react) | React adapter — Provider, hook, components |
 
@@ -219,7 +222,7 @@ Remove the `'toast' => session('toast')` from your `HandleInertiaRequests` middl
 
 - PHP 8.1+
 - Laravel 10, 11, or 12
-- Inertia.js v1 or v2
+- Inertia.js v2.3.3+
 - Vue 3.3+ or React 18+
 
 ## License

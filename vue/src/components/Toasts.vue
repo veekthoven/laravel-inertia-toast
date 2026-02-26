@@ -44,7 +44,7 @@ function remove(id: string) {
     enter-active-class="transition duration-300 ease-out"
     leave-active-class="transition duration-200 ease-in"
     :leave-to-class="leaveTo"
-    class="pointer-events-none fixed z-50 flex w-full max-w-sm flex-col gap-3"
+    class="fixed z-50 flex w-full max-w-sm flex-col gap-3"
     :class="positionClasses"
   >
     <ToastItem
@@ -52,10 +52,6 @@ function remove(id: string) {
       :key="item.id"
       :toast="item"
       @remove="remove"
-    >
-      <template v-if="$slots.icon" #icon>
-        <slot name="icon" />
-      </template>
-    </ToastItem>
+    ></ToastItem>
   </TransitionGroup>
 </template>

@@ -37,22 +37,12 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Inertia Prop Key
+    | Inertia Flash Key
     |--------------------------------------------------------------------------
     |
-    | The key used when sharing toast data with Inertia page props.
+    | The key used when flashing toast data via Inertia::flash().
     |
     */
     'prop_key' => 'toasts',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Session Key
-    |--------------------------------------------------------------------------
-    |
-    | The session flash key used to store toasts between requests.
-    |
-    */
-    'session_key' => '_toasts',
 
 ];

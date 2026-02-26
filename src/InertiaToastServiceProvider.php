@@ -2,9 +2,7 @@
 
 namespace InertiaToast;
 
-use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Support\ServiceProvider;
-use InertiaToast\Middleware\ShareToasts;
 
 class InertiaToastServiceProvider extends ServiceProvider
 {
@@ -22,15 +20,5 @@ class InertiaToastServiceProvider extends ServiceProvider
                 __DIR__.'/../config/inertia-toast.php' => config_path('inertia-toast.php'),
             ], 'inertia-toast-config');
         }
-
-        $this->registerMiddleware();
-    }
-
-    protected function registerMiddleware(): void
-    {
-        /** @var Kernel $kernel */
-        $kernel = $this->app->make(Kernel::class);
-
-        $kernel->pushMiddleware(ShareToasts::class);
     }
 }

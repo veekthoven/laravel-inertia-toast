@@ -8,7 +8,7 @@
 composer require veekthoven/laravel-inertia-toast
 ```
 
-The package auto-registers its service provider and middleware. No manual setup needed.
+The package auto-registers its service provider. No manual setup needed.
 
 To publish the config file:
 
@@ -129,7 +129,7 @@ return back();
 
 ### Redirects
 
-Toasts automatically survive redirects. No extra work needed — the middleware handles `Session::keep()` on redirect responses.
+Toasts automatically survive redirects. No extra work needed — the package uses `Inertia::flash()` which persists data through redirects automatically.
 
 ```php
 toast('Welcome back!')->success();
@@ -199,11 +199,8 @@ return [
     // Maximum toasts visible at once
     'max_visible' => 5,
 
-    // Inertia page prop key
+    // Inertia flash key
     'prop_key' => 'toasts',
-
-    // Session flash key
-    'session_key' => '_toasts',
 ];
 ```
 
@@ -236,8 +233,6 @@ app.use(InertiaToast, {
 | `warning` | Yellow | Exclamation triangle |
 | `info` | Blue | Information circle |
 
-All levels include dark mode variants automatically.
-
 ---
 
 ## Migrating from Raw Session Flash
@@ -258,4 +253,4 @@ toast('Saved!')->success();
 return back();
 ```
 
-Then remove `'toast' => session('toast')` from your `HandleInertiaRequests::share()` method — the package middleware handles sharing automatically.
+Then remove `'toast' => session('toast')` from your `HandleInertiaRequests::share()` method — the package handles sharing via `Inertia::flash()` automatically.
