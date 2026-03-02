@@ -90,7 +90,20 @@ const { success, error, info, warning } = useToast()
 function handleClick() {
   success('Copied to clipboard!')
 }
+
+function handleDelete() {
+  error('Item has been removed.', { title: 'Deleted' })
+}
 </script>
+```
+
+### With Title and Duration
+
+Pass an options object as the second argument to include a title and/or custom duration:
+
+```js
+success('Profile has been updated.', { title: 'Success' })
+warning('Session expiring soon.', { title: 'Warning', duration: 10000 })
 ```
 
 ## Server-Side Usage
@@ -105,7 +118,7 @@ composer require veekthoven/laravel-inertia-toast
 use InertiaToast\Facades\Toast;
 
 Toast::success('Profile updated!');
-Toast::error('Something went wrong.');
+Toast::error('Something went wrong.', title: 'Error');
 Toast::info('Check your email for a confirmation link.');
 Toast::warning('Your subscription is about to expire.');
 

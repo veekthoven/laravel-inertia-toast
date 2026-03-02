@@ -46,13 +46,18 @@ function toastReducer(state: ToastState, action: ToastAction): ToastState {
   }
 }
 
+export interface ToastOptions {
+  title?: string
+  duration?: number
+}
+
 export interface ToastContextValue {
   items: ToastItem[]
   config: ToastConfig
-  success: (message: string, duration?: number) => void
-  error: (message: string, duration?: number) => void
-  info: (message: string, duration?: number) => void
-  warning: (message: string, duration?: number) => void
+  success: (message: string, options?: ToastOptions) => void
+  error: (message: string, options?: ToastOptions) => void
+  info: (message: string, options?: ToastOptions) => void
+  warning: (message: string, options?: ToastOptions) => void
   remove: (id: string) => void
   clear: () => void
 }
@@ -90,20 +95,20 @@ export function ToastProvider({ children, config: configOverrides }: ToastProvid
     return removeListener
   }, [])
 
-  const add = useCallback((message: string, level: ToastLevel, duration?: number) => {
+  const add = useCallback((message: string, level: ToastLevel, options?: ToastOptions) => {
     dispatch({
       type: 'ADD',
-      payload: { message, level, duration: duration ?? null },
+      payload: { message, level, title: options?.title ?? null, duration: options?.duration ?? null },
     })
   }, [])
 
   const value: ToastContextValue = {
     items: state.items,
     config: state.config,
-    success: useCallback((msg, dur) => add(msg, 'success', dur), [add]),
-    error: useCallback((msg, dur) => add(msg, 'error', dur), [add]),
-    info: useCallback((msg, dur) => add(msg, 'info', dur), [add]),
-    warning: useCallback((msg, dur) => add(msg, 'warning', dur), [add]),
+    success: useCallback((msg, opts) => add(msg, 'success', opts), [add]),
+    error: useCallback((msg, opts) => add(msg, 'error', opts), [add]),
+    info: useCallback((msg, opts) => add(msg, 'info', opts), [add]),
+    warning: useCallback((msg, opts) => add(msg, 'warning', opts), [add]),
     remove: useCallback((id: string) => dispatch({ type: 'REMOVE', payload: id }), []),
     clear: useCallback(() => dispatch({ type: 'CLEAR' }), []),
   }

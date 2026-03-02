@@ -109,11 +109,14 @@ const iconClasses = computed(() => {
       </slot>
     </div>
 
-    <div class="ml-3 text-sm font-normal">{{ toast.message }}</div>
+    <div class="ml-3 text-sm font-normal">
+      <div v-if="toast.title" class="font-semibold text-gray-900 mb-1">{{ toast.title }}</div>
+      {{ toast.message }}
+    </div>
 
     <button
       type="button"
-      class="ml-auto inline-flex items-center justify-center h-8 w-8 rounded-lg bg-white p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-900 focus:ring-2 focus:ring-gray-300"
+      class="ml-auto inline-flex items-center justify-center h-8 w-8 rounded-lg bg-white p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-900 focus:ring-2 focus:ring-gray-300 shrink-0"
       @click="emit('remove', toast.id)"
       aria-label="Close"
     >

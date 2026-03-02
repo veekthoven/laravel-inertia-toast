@@ -20,6 +20,7 @@ Toast notifications can can be triggered from both your backend (PHP) and fronte
 ## Features
 
 - Fluent PHP API: `toast('Saved!')->success()` or `Toast::success('Saved!')`
+- Optional toast titles for added context
 - Vue 3 and React adapters with TypeScript support
 - Position-aware with 6 positions (top-right, top-left, top-center, bottom-right, bottom-left, bottom-center)
 - Tailwind CSS styling (v3 & v4 compatible)
@@ -202,14 +203,34 @@ toast('Slow message.')->duration(10000)->warning();
 toast()->success('Quick shorthand');
 ```
 
+### With Title
+
+```php
+// Via facade (using named argument)
+Toast::success('Profile has been updated.', title: 'Success');
+
+// Via helper
+toast('Item has been removed.')->title('Deleted')->error();
+```
+
 ### Custom Duration
 
 ```php
 // Via facade
-Toast::success('Saved!', 3000); // 3 seconds
+Toast::success('Saved!', duration: 3000); // 3 seconds
 
 // Via helper
 toast('Done!')->duration(3000)->success();
+```
+
+### Title + Duration
+
+```php
+// Via facade
+Toast::warning('Your session is about to expire.', title: 'Warning', duration: 10000);
+
+// Via helper
+toast('Your session is about to expire.')->title('Warning')->duration(10000)->warning();
 ```
 
 ## Client-Side Usage
@@ -227,6 +248,10 @@ const { success, error, info, warning } = useToast()
 function handleClick() {
   success('Copied to clipboard!')
 }
+
+function handleDelete() {
+  error('Item has been removed.', { title: 'Deleted' })
+}
 </script>
 ```
 
@@ -239,9 +264,14 @@ function MyComponent() {
   const { success, error, info, warning } = useToast()
 
   return (
-    <button onClick={() => success('Copied to clipboard!')}>
-      Copy
-    </button>
+    <>
+      <button onClick={() => success('Copied to clipboard!')}>
+        Copy
+      </button>
+      <button onClick={() => error('Item has been removed.', { title: 'Deleted' })}>
+        Delete
+      </button>
+    </>
   )
 }
 ```

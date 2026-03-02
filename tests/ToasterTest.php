@@ -50,11 +50,33 @@ class ToasterTest extends TestCase
     {
         $toaster = app(Toaster::class);
 
-        $toaster->success('Quick', 2000);
+        $toaster->success('Quick', duration: 2000);
 
         $pending = $toaster->getPending();
 
         $this->assertEquals(2000, $pending[0]->duration);
+    }
+
+    public function test_custom_title(): void
+    {
+        $toaster = app(Toaster::class);
+
+        $toaster->success('Record saved successfully.', 'Success');
+
+        $pending = $toaster->getPending();
+
+        $this->assertEquals('Success', $pending[0]->title);
+    }
+
+    public function test_title_defaults_to_null(): void
+    {
+        $toaster = app(Toaster::class);
+
+        $toaster->info('No title here');
+
+        $pending = $toaster->getPending();
+
+        $this->assertNull($pending[0]->title);
     }
 
     public function test_facade_works(): void
@@ -101,13 +123,26 @@ class ToasterTest extends TestCase
         $this->assertEquals(ToastLevel::Warning, $pending[0]->level);
     }
 
+    public function test_pending_toast_with_title(): void
+    {
+        toast('Item deleted.')->title('Deleted')->error();
+
+        $toaster = app(Toaster::class);
+        $pending = $toaster->getPending();
+
+        $this->assertEquals('Deleted', $pending[0]->title);
+        $this->assertEquals('Item deleted.', $pending[0]->message);
+        $this->assertEquals(ToastLevel::Error, $pending[0]->level);
+    }
+
     public function test_toast_message_is_arrayable(): void
     {
-        $msg = new ToastMessage('Test', ToastLevel::Error, 3000);
+        $msg = new ToastMessage('Test', ToastLevel::Error, 'Error Title', 3000);
 
         $this->assertEquals([
             'message' => 'Test',
             'level' => 'error',
+            'title' => 'Error Title',
             'duration' => 3000,
         ], $msg->toArray());
     }

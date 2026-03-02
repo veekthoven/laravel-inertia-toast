@@ -3,6 +3,7 @@ export type ToastLevel = 'success' | 'error' | 'info' | 'warning'
 export interface ToastMessage {
   message: string
   level: ToastLevel
+  title: string | null
   duration: number | null
 }
 

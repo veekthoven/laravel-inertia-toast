@@ -140,11 +140,14 @@ export function ToastItem({ toast, config, position, onRemove }: ToastItemProps)
         <LevelIcon level={toast.level} />
       </div>
 
-      <div className="ml-3 text-sm font-normal">{toast.message}</div>
+      <div className="ml-3 text-sm font-normal">
+        {toast.title && <div className="font-semibold text-gray-900 mb-1">{toast.title}</div>}
+        {toast.message}
+      </div>
 
       <button
         type="button"
-        className="ml-auto inline-flex items-center justify-center h-8 w-8 rounded-lg bg-white p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-900 focus:ring-2 focus:ring-gray-300"
+        className="ml-auto inline-flex items-center justify-center h-8 w-8 rounded-lg bg-white p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-900 focus:ring-2 focus:ring-gray-300 shrink-0"
         onClick={triggerExit}
         aria-label="Close"
       >

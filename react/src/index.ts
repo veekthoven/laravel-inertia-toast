@@ -1,5 +1,5 @@
 export { ToastProvider } from './context'
-export type { ToastProviderProps, ToastContextValue } from './context'
+export type { ToastProviderProps, ToastContextValue, ToastOptions } from './context'
 export { useToast } from './hooks/useToast'
 export { Toasts } from './components/Toasts'
 export { ToastItem } from './components/ToastItem'

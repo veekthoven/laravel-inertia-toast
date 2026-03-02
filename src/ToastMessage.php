@@ -11,20 +11,22 @@ class ToastMessage implements Arrayable, JsonSerializable
     public function __construct(
         public readonly string $message,
         public readonly ToastLevel $level = ToastLevel::Info,
+        public readonly ?string $title = null,
         public readonly ?int $duration = null,
     ) {}
 
-    /** @return array{message: string, level: string, duration: int|null} */
+    /** @return array{message: string, level: string, title: string|null, duration: int|null} */
     public function toArray(): array
     {
         return [
             'message' => $this->message,
             'level' => $this->level->value,
+            'title' => $this->title,
             'duration' => $this->duration,
         ];
     }
 
-    /** @return array{message: string, level: string, duration: int|null} */
+    /** @return array{message: string, level: string, title: string|null, duration: int|null} */
     public function jsonSerialize(): array
     {
         return $this->toArray();

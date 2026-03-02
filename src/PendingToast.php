@@ -6,12 +6,21 @@ use InertiaToast\Enums\ToastLevel;
 
 class PendingToast
 {
+    protected ?string $title = null;
+
     protected ?int $duration = null;
 
     public function __construct(
         protected string $message,
         protected Toaster $toaster,
     ) {}
+
+    public function title(string $title): static
+    {
+        $this->title = $title;
+
+        return $this;
+    }
 
     public function duration(int $milliseconds): static
     {
@@ -42,6 +51,6 @@ class PendingToast
 
     protected function commit(ToastLevel $level): Toaster
     {
-        return $this->toaster->add($this->message, $level, $this->duration);
+        return $this->toaster->add($this->message, $level, $this->title, $this->duration);
     }
 }

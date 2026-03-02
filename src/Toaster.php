@@ -10,29 +10,29 @@ class Toaster
     /** @var ToastMessage[] */
     protected array $pending = [];
 
-    public function success(string $message, ?int $duration = null): static
+    public function success(string $message, ?string $title = null, ?int $duration = null): static
     {
-        return $this->add($message, ToastLevel::Success, $duration);
+        return $this->add($message, ToastLevel::Success, $title, $duration);
     }
 
-    public function error(string $message, ?int $duration = null): static
+    public function error(string $message, ?string $title = null, ?int $duration = null): static
     {
-        return $this->add($message, ToastLevel::Error, $duration);
+        return $this->add($message, ToastLevel::Error, $title, $duration);
     }
 
-    public function info(string $message, ?int $duration = null): static
+    public function info(string $message, ?string $title = null, ?int $duration = null): static
     {
-        return $this->add($message, ToastLevel::Info, $duration);
+        return $this->add($message, ToastLevel::Info, $title, $duration);
     }
 
-    public function warning(string $message, ?int $duration = null): static
+    public function warning(string $message, ?string $title = null, ?int $duration = null): static
     {
-        return $this->add($message, ToastLevel::Warning, $duration);
+        return $this->add($message, ToastLevel::Warning, $title, $duration);
     }
 
-    public function add(string $message, ToastLevel $level = ToastLevel::Info, ?int $duration = null): static
+    public function add(string $message, ToastLevel $level = ToastLevel::Info, ?string $title = null, ?int $duration = null): static
     {
-        $this->pending[] = new ToastMessage($message, $level, $duration);
+        $this->pending[] = new ToastMessage($message, $level, $title, $duration);
 
         Inertia::flash(
             $this->getPropKey(),
